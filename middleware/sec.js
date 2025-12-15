@@ -200,6 +200,16 @@ const sanitizePath = (req, res, next) => {
         console.error(`[error] malformed URI: ${originalUrl} - IP: ${ip}`);
         return res.status(400).json({ error: 'malformed url' });
     }
+    // ✅ ALWAYS allow static assets
+    if (decodedUrl.startsWith('/remote-assets/')) {
+        return next();
+    }
+
+// ✅ allow favicon
+    if (decodedUrl === '/favicon.ico') {
+        return next();
+    }
+
 
     const isImagePath = /^\/image\/CSGO(-[ABCDEFGHJKLMNOPQRSTUVWXYZabcdefhijkmnopqrstuvwxyz23456789]{5}){5}$/.test(decodedUrl);
 
