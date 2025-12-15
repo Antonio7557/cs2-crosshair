@@ -2,7 +2,7 @@ const config = require('../config');
 // @ts-ignore
 const rateLimit = require('express-rate-limit');
 
-const allowedPathRegex = /^[a-zA-Z0-9\-_.\/]*$/;
+const allowedPathRegex = /^[a-zA-Z0-9\-_/]*$/;
 
 const blockedUserAgents = [
     /curl/i,
