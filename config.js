@@ -1,8 +1,10 @@
 const config = {
-    port: 3001,
-    host: 'localhost:3001',
-    domain: 'localhost:3001',
-    nodeEnv: 'development',
+    port: process.env.PORT || 3001,
+
+    host: 'cs2-crosshair-production.up.railway.app',
+    domain: 'cs2-crosshair-production.up.railway.app',
+
+    nodeEnv: 'production',
     
     cache: {
         duration: 3 * 60 * 60 * 1000, // 3 hours
