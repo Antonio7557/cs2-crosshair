@@ -277,12 +277,24 @@ const hostValidation = (req, res, next) => {
 };
 
 const securityHeaders = (req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    next();
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+  // ✅ Dozvoli embed (iframe) samo s tvojih domena
+  // Napomena: nemoj koristiti X-Frame-Options jer nema dobar whitelist support.
+  const allowedFrames = [
+    "'self'",
+    "https://cs2bettingtips.com",
+    "https://www.cs2bettingtips.com",
+  ].join(' ');
+
+  // Ako već imaš CSP negdje drugdje, onda ovo treba merge-at, ali ovdje ga nema.
+  res.setHeader('Content-Security-Policy', `frame-ancestors ${allowedFrames};`);
+
+  next();
 };
+
 
 module.exports = {
     sanitizePath,
