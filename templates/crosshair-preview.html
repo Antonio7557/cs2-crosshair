@@ -265,6 +265,104 @@
         transform: scale(1.15) !important;
       }
     }
+    /* =========================
+   FINAL FIXES
+   ========================= */
+
+/* 1. Keep everything inside one clean card */
+.cs-dialog{
+  max-width: 980px !important;
+  margin: 22px auto !important;
+  padding: 0 14px !important;
+}
+
+#header .top > div > div.cs-form-group{
+  border-radius: var(--radius) !important;
+  overflow: hidden !important;
+}
+
+/* 2. Header layout (no weird offset) */
+.cs-dialog .heading{
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid var(--border2) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 12px 14px !important;
+  margin-bottom: 14px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.cs-dialog .heading .wrapper{
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.cs-dialog .heading .text{
+  margin: 0 !important;
+  font-weight: 800 !important;
+  opacity: .9 !important;
+}
+
+/* 3. REAL visible X close button */
+.cs-dialog .heading .cs-btn.close{
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid var(--border2) !important;
+  position: relative !important;
+  padding: 0 !important;
+}
+
+.cs-dialog .heading .cs-btn.close::before,
+.cs-dialog .heading .cs-btn.close::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:18px;
+  height:2px;
+  background: rgba(255,255,255,0.85);
+}
+
+.cs-dialog .heading .cs-btn.close::before{
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+.cs-dialog .heading .cs-btn.close::after{
+  transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+.cs-dialog .heading .cs-btn.close:hover{
+  background: rgba(255,255,255,0.10) !important;
+}
+
+/* 4. Remove useless icon */
+.cs-dialog .heading .icon{
+  display: none !important;
+}
+
+/* 5. Hide Share button */
+.footer-btns button[onclick="shareCrosshair()"]{
+  display: none !important;
+}
+
+/* 6. Crosshair always centered */
+.crosshair-image{
+  position: relative !important;
+  overflow: hidden !important;
+}
+#crosshairCanvas{
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%,-50%) !important;
+  pointer-events: none !important;
+}
+
   </style>
 </head>
 
@@ -275,7 +373,10 @@
         <div class="icon"></div>
         <p class="text">CS2 Crosshair Tool – cs2bettingtips.com</p>
       </div>
-      <button class="cs-btn close" onclick="window.location.href='https://cs2bettingtips.com'"></button>
+      <button class="cs-btn close"
+        onclick="try{window.top.location.href='https://cs2bettingtips.com'}catch(e){window.location.href='https://cs2bettingtips.com'}">
+      </button>
+
     </div>
 
     <header id="header">
