@@ -10,16 +10,40 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ekmas/cs16.css@main/css/cs16.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.css">
+
     <style>
+        /* boja player info */
         .player-info {
             color: {{colorRGB}};
         }
 
+        /* sakrij nepotrebne tagove */
         .otag {
             display: none;
         }
+
+        /* =========================
+           ISKLJUČI PLAYER SEARCH UI
+           ========================= */
+
+        /* dropdown (Pro / Streamer, SteamID, itd.) */
+        #searchType {
+            display: none !important;
+        }
+
+        /* input polje + autocomplete */
+        #inputContainer,
+        #autocompleteResults {
+            display: none !important;
+        }
+
+        /* Search gumb */
+        button[onclick="goToSearch()"] {
+            display: none !important;
+        }
     </style>
 </head>
+
 
 <body>
     <div class="cs-dialog">
