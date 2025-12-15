@@ -181,7 +181,13 @@ app.use((err, req, res, next) => {
 });
 
 // ✅ Railway: bindaj na 0.0.0.0 i koristi env port
-const port = process.env.PORT || config.port || 3001;
+const port = Number(process.env.PORT);
+
+if (!port) {
+  console.error("PORT env is missing!");
+  process.exit(1);
+}
+
 app.listen(port, '0.0.0.0', () => {
-  console.log(`cs2-crosshair running on ${config.host} (${port}) :3c`);
+  console.log(`cs2-crosshair listening on 0.0.0.0:${port} :3c`);
 });
