@@ -1,5 +1,5 @@
 const config = {
-    port: process.env.PORT || 3001,
+    port: process.env.PORT || 8080,
 
     host: 'cs2-crosshair-production.up.railway.app',
     domain: 'cs2-crosshair-production.up.railway.app',
