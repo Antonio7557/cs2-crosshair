@@ -9,15 +9,233 @@
     <link rel="icon" href="https://files.catbox.moe/9anhhp.ico" type="image/x-icon">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ekmas/cs16.css@main/css/cs16.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.css">
+
     <style>
-        .player-info {
-            color: {{colorRGB}};
+        /* keep original functionality intact (only theme CSS) */
+        :root{
+            --bg: #0f141a;
+            --panel: rgba(255,255,255,.04);
+            --panel2: rgba(255,255,255,.06);
+            --border: rgba(255,255,255,.10);
+            --border2: rgba(255,255,255,.08);
+            --text: rgba(255,255,255,.88);
+            --muted: rgba(255,255,255,.65);
+            --accent: #e11d48;
+            --radius: 18px;
+            --radius-sm: 12px;
+            --shadow: 0 14px 40px rgba(0,0,0,.35);
+            --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         }
 
-        .otag {
-            display: none;
+        html, body{
+            background: transparent !important; /* WP page background */
+            color: var(--text) !important;
+            font-family: var(--font) !important;
+            margin: 0;
+            padding: 0;
         }
+
+        .cs-dialog{
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        /* Header bar */
+        .cs-dialog .heading{
+            width: 100% !important;
+            box-sizing: border-box !important;
+            background: var(--panel) !important;
+            border: 1px solid var(--border2) !important;
+            border-radius: var(--radius) !important;
+            box-shadow: var(--shadow) !important;
+
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: relative !important;
+
+            padding: 12px 16px !important;
+            margin: 0 0 12px 0 !important;
+            overflow: hidden !important;
+        }
+
+        .cs-dialog .heading .wrapper{
+            width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 10px;
+        }
+
+        .cs-dialog .heading .icon{ display:none !important; }
+
+        .cs-dialog .heading .text{
+            color: var(--text) !important;
+            font-weight: 800;
+            letter-spacing: .2px;
+            margin: 0 !important;
+            text-align: center !important;
+            padding: 0 52px; /* so it doesn't collide with X */
+            line-height: 1.2;
+        }
+
+        .cs-dialog .heading .cs-btn.close{
+            position: absolute !important;
+            right: 12px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+
+            background: rgba(255,255,255,.06) !important;
+            border: 1px solid var(--border2) !important;
+            color: rgba(255,255,255,.92) !important;
+
+            display: grid !important;
+            place-items: center !important;
+
+            font-size: 22px !important;
+            line-height: 1 !important;
+            padding: 0 !important;
+
+            opacity: .95 !important;
+            text-transform: none !important;
+        }
+
+        .cs-dialog .heading .cs-btn.close:hover{
+            background: rgba(255,255,255,.10) !important;
+        }
+
+        /* Main card */
+        .cs-form-group{
+            background: var(--panel) !important;
+            border: 1px solid var(--border2) !important;
+            border-radius: var(--radius) !important;
+            box-shadow: var(--shadow) !important;
+
+            margin: 0 !important;           /* removed huge margin */
+            padding: 16px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Player info / meta */
+        .player-info { color: {{colorRGB}} !important; font-weight: 800; }
+        .otag { display: none !important; }
+
+        .cs-hr{
+            border-color: rgba(255,255,255,.08) !important;
+            opacity: 1 !important;
+        }
+
+        /* Preview card */
+        .crosshair-preview{
+            background: var(--panel2) !important;
+            border: 1px solid var(--border2) !important;
+            border-radius: var(--radius) !important;
+            padding: 12px !important;
+        }
+
+        .crosshair-image{
+            border-radius: var(--radius-sm) !important;
+            overflow: hidden !important;
+            border: 1px solid rgba(255,255,255,.06);
+            background: rgba(0,0,0,.25);
+            position: relative !important;
+        }
+
+        /* Do NOT change preview size or canvas sizing (keep original behavior) */
+        /* only ensure canvas stays centered without forcing width/height */
+        #crosshairCanvas{
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: auto !important;
+            height: auto !important;
+            pointer-events: none !important;
+            image-rendering: pixelated;
+        }
+
+        /* Inputs + selects */
+        .cs-select,
+        .cs-input{
+            background: rgba(255,255,255,.06) !important;
+            border: 1px solid var(--border2) !important;
+            color: var(--text) !important;
+            border-radius: var(--radius-sm) !important;
+        }
+
+        .cs-input::placeholder{ color: rgba(255,255,255,.45) !important; }
+        input[type="range"]{ accent-color: var(--accent); }
+
+        .cs-input__label, label{
+            color: var(--muted) !important;
+            font-weight: 700;
+        }
+
+        .cs-checkbox__label{ color: var(--text) !important; opacity: .9; }
+
+        /* Grid: keep original but cleaner */
+        .controls-grid{
+            margin-left: 0 !important;
+        }
+
+        /* Buttons */
+        .cs-btn{
+            background: rgba(255,255,255,.06) !important;
+            border: 1px solid var(--border2) !important;
+            color: var(--text) !important;
+            border-radius: var(--radius-sm) !important;
+            box-shadow: none !important;
+            text-transform: none !important;
+        }
+
+        .cs-btn:hover{
+            border-color: rgba(255,255,255,.18) !important;
+            background: rgba(255,255,255,.09) !important;
+        }
+
+        .footer-btns .cs-btn{
+            background: var(--accent) !important;
+            border: 0 !important;
+            font-weight: 800;
+            padding: 10px 14px !important;
+        }
+
+        .footer-btns .cs-btn:hover{ filter: brightness(1.08); }
+
+        p.text{
+            color: var(--muted) !important;
+            opacity: .9;
+            margin-top: 10px !important;
+        }
+
+        /* Remove search UI completely (as requested) */
+        #searchType,
+        #inputContainer,
+        #autocompleteResults,
+        #searchInput,
+        #inputPrefix,
+        button[onclick="goToSearch()"]{
+            display: none !important;
+        }
+
+        /* Also remove the whole search row wrapper (gap cleanup) */
+        .cs-form-group > div[style*="max-width: 100%"][style*="flex-wrap: wrap"]{
+            display: none !important;
+        }
+
+        /* Optional: hide Share button (keep if you want it) */
+        /* .footer-btns button[onclick="shareCrosshair()"] { display:none !important; } */
     </style>
 </head>
 
@@ -28,46 +246,23 @@
                 <div class="icon"></div>
                 <p class="text">CS2 Crosshair Tool - cs2bettingtips.com</p>
             </div>
-            <button class="cs-btn close" onclick="window.location.href='https://girlglock.com'"></button>
+
+            <button class="cs-btn close"
+                onclick="try{window.top.location.href='https://cs2bettingtips.com'}catch(e){window.location.href='https://cs2bettingtips.com'}"
+                aria-label="Close">×</button>
         </div>
 
         <header id="header">
             <div class="top">
                 <div>
-                    <div class="cs-form-group" style="margin: 50px 0">
+                    <div class="cs-form-group">
                         <div class="player-info" style="scale: 1.5; margin-bottom: -7px;">{{playerInfo}}</div>
                         <div style="font-size: 1.3em; margin-top: 10px; margin-bottom: -7px;">{{stats}}</div>
                         <div style="font-size: 0.8em; margin-top: 10px; margin-bottom: -7px;">{{lastUsed}}</div>
-                        <br>
-                        <div
-                            style="max-width: 100%; display: flex; margin: auto; gap: 1px; flex-wrap: wrap; align-items: center;">
-                            <select id="searchType" class="cs-select" style="min-width: 20%; height: 24px;">
-                                <option value="proplayer">Pro / Streamer</option>
-                                <option value="steamvanity">Steam Vanity</option>
-                                <option value="steamid64">SteamID64</option>
-                                <option value="leetify">Leetify Handle</option>
-                            </select>
-
-                            <div id="inputContainer" style="position: relative; flex: 1; min-width: 150px;">
-                                <div class="autocomplete-container">
-                                    <input type="text" id="searchInput" class="cs-input" placeholder="<pro_player>"
-                                        style="width: 100%; padding-left: 8px; box-sizing: border-box;" />
-                                    <div id="autocompleteResults" class="autocomplete-results"></div>
-                                </div>
-                                <span id="inputPrefix" style="position: absolute;
-                                        left: 1.5%;
-                                        top: 50%;
-                                        transform: translateY(-50%);
-                                        color: gray;
-                                        pointer-events: none;
-                                        user-select: none;">
-                                </span>
-                            </div>
-
-                            <button class="cs-btn" style="flex: 0 0 auto;" onclick="goToSearch()">Search</button>
-                        </div>
 
                         <br>
+
+                        <!-- SEARCH ROW REMOVED -->
 
                         <hr class="cs-hr" />
 
@@ -78,7 +273,7 @@
                                 <img id="originalImage" src="{{imageUrl}}" />
                                 <canvas id="crosshairCanvas" width="64" height="64" style="display: none;"></canvas>
                             </div>
-                            <div style="display: flex; justify-content: center; gap: 1px; margin-top: 5px">
+                            <div style="display: flex; justify-content: center; gap: 8px; margin-top: 8px">
                                 <button class="cs-btn" onclick="prevBackground()">←</button>
                                 <button class="cs-btn" onclick="nextBackground()">→</button>
                             </div>
@@ -87,7 +282,7 @@
                         <br>
 
                         <div>
-                            <div class="controls-grid" style="margin-left: 5%;">
+                            <div class="controls-grid" style="margin-left: 0;">
                                 <div class="controls-column">
                                     <div class="control-group">
                                         <select id="cl_crosshairstyle" class="cs-select">
@@ -261,9 +456,11 @@
                             <input type="text" readonly id="crosshairCode" value="{{codeValue}}" class="cs-input"
                                 style="width: 100%;" />
                         </div>
+
                         <br>
-                        <p class="text">modify settings above to generate new codes, player cache expires every 3 hours
-                        </p>
+
+                        <p class="text">modify settings above to generate new codes, player cache expires every 3 hours</p>
+
                         <menu class="footer-btns" style="position:relative;">
                             <button class="cs-btn" onclick="copyCode()">Copy</button>
                             <button class="cs-btn" onclick="downloadImage()">Save</button>
@@ -274,10 +471,11 @@
             </div>
         </header>
     </div>
+
     <script>
         const originalCode = '{{codeValue}}';
     </script>
-    <!-- we do this to cut down on stuff sent from the server to the user :p -->
+
     <script
         src="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.js">
     </script>
