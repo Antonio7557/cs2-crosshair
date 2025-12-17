@@ -1,484 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}} - {{domain}}</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}} - {{domain}}</title>
 
-    <link rel="icon" href="https://files.catbox.moe/9anhhp.ico" type="image/x-icon">
+  <link rel="icon" href="https://files.catbox.moe/9anhhp.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ekmas/cs16.css@main/css/cs16.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ekmas/cs16.css@main/css/cs16.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.css">
 
-    <style>
-        /* keep original functionality intact (only theme CSS) */
-        :root{
-            --bg: #0f141a;
-            --panel: rgba(255,255,255,.04);
-            --panel2: rgba(255,255,255,.06);
-            --border: rgba(255,255,255,.10);
-            --border2: rgba(255,255,255,.08);
-            --text: rgba(255,255,255,.88);
-            --muted: rgba(255,255,255,.65);
-            --accent: #e11d48;
-            --radius: 18px;
-            --radius-sm: 12px;
-            --shadow: 0 14px 40px rgba(0,0,0,.35);
-            --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        }
+  <style>
+    :root{
+      --bg: #0f141a;
+      --panel: rgba(255,255,255,.04);
+      --panel2: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.10);
+      --border2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.90);
+      --muted: rgba(255,255,255,.65);
+      --accent: #e11d48;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
 
-        html, body{
-            background: transparent !important; /* WP page background */
-            color: var(--text) !important;
-            font-family: var(--font) !important;
-            margin: 0;
-            padding: 0;
-        }
+    html, body{
+      margin:0 !important;
+      padding:0 !important;
+      background: transparent !important;
+      color: var(--text) !important;
+      font-family: var(--font) !important;
+      overflow-x: hidden;
+    }
 
-        .cs-dialog{
-            background: transparent !important;
-            border: 0 !important;
-            box-shadow: none !important;
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
+    /* Main container */
+    .cs-dialog{
+      max-width: 980px !important;
+      margin: 18px auto !important;
+      padding: 0 14px !important;
+      box-sizing: border-box !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
 
-        /* Header bar */
-        .cs-dialog .heading{
-            width: 100% !important;
-            box-sizing: border-box !important;
-            background: var(--panel) !important;
-            border: 1px solid var(--border2) !important;
-            border-radius: var(--radius) !important;
-            box-shadow: var(--shadow) !important;
+    /* Header: centered title + proper X pinned right */
+    .cs-dialog .heading{
+      width: 100% !important;
+      box-sizing: border-box !important;
 
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            position: relative !important;
+      background: var(--panel) !important;
+      border: 1px solid var(--border2) !important;
+      border-radius: var(--radius) !important;
+      box-shadow: var(--shadow) !important;
 
-            padding: 12px 16px !important;
-            margin: 0 0 12px 0 !important;
-            overflow: hidden !important;
-        }
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
 
-        .cs-dialog .heading .wrapper{
-            width: 100% !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            gap: 10px;
-        }
+      position: relative !important;
+      padding: 12px 14px !important;
+      margin: 0 0 12px 0 !important;
+      overflow:hidden !important;
+    }
 
-        .cs-dialog .heading .icon{ display:none !important; }
+    .cs-dialog .heading .wrapper{
+      width: 100% !important;
+      display:flex !important;
+      justify-content:center !important;
+      align-items:center !important;
+      gap: 10px !important;
+    }
 
-        .cs-dialog .heading .text{
-            color: var(--text) !important;
-            font-weight: 800;
-            letter-spacing: .2px;
-            margin: 0 !important;
-            text-align: center !important;
-            padding: 0 52px; /* so it doesn't collide with X */
-            line-height: 1.2;
-        }
+    .cs-dialog .heading .icon{
+      display:none !important;
+    }
 
-        .cs-dialog .heading .cs-btn.close{
-            position: absolute !important;
-            right: 12px !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
+    .cs-dialog .heading .text{
+      margin: 0 !important;
+      font-weight: 800 !important;
+      letter-spacing: .2px;
+      text-align:center !important;
+      padding: 0 52px; /* protects from X overlap */
+      color: var(--text) !important;
+      opacity: .95 !important;
+      line-height: 1.2;
+    }
 
-            width: 36px !important;
-            height: 36px !important;
-            border-radius: 10px !important;
+    .cs-dialog .heading .cs-btn.close{
+      position:absolute !important;
+      right: 12px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
 
-            background: rgba(255,255,255,.06) !important;
-            border: 1px solid var(--border2) !important;
-            color: rgba(255,255,255,.92) !important;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
 
-            display: grid !important;
-            place-items: center !important;
+      background: rgba(255,255,255,.06) !important;
+      border: 1px solid var(--border2) !important;
+      padding: 0 !important;
+    }
 
-            font-size: 22px !important;
-            line-height: 1 !important;
-            padding: 0 !important;
+    /* Draw a real visible X */
+    .cs-dialog .heading .cs-btn.close::before,
+    .cs-dialog .heading .cs-btn.close::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:18px;
+      height:2px;
+      background: rgba(255,255,255,.85);
+    }
+    .cs-dialog .heading .cs-btn.close::before{ transform: translate(-50%,-50%) rotate(45deg); }
+    .cs-dialog .heading .cs-btn.close::after{  transform: translate(-50%,-50%) rotate(-45deg); }
 
-            opacity: .95 !important;
-            text-transform: none !important;
-        }
+    .cs-dialog .heading .cs-btn.close:hover{
+      background: rgba(255,255,255,.10) !important;
+    }
 
-        .cs-dialog .heading .cs-btn.close:hover{
-            background: rgba(255,255,255,.10) !important;
-        }
+    /* Card */
+    .cs-form-group{
+      background: var(--panel) !important;
+      border: 1px solid var(--border2) !important;
+      border-radius: var(--radius) !important;
+      box-shadow: var(--shadow) !important;
 
-        /* Main card */
-        .cs-form-group{
-            background: var(--panel) !important;
-            border: 1px solid var(--border2) !important;
-            border-radius: var(--radius) !important;
-            box-shadow: var(--shadow) !important;
+      margin: 0 !important;   /* remove original big margins */
+      padding: 16px !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+    }
 
-            margin: 0 !important;           /* removed huge margin */
-            padding: 16px !important;
-            box-sizing: border-box !important;
-        }
+    .player-info{ color: {{colorRGB}} !important; font-weight: 800; }
+    .otag{ display:none !important; }
 
-        /* Player info / meta */
-        .player-info { color: {{colorRGB}} !important; font-weight: 800; }
-        .otag { display: none !important; }
+    .cs-hr{
+      border-color: rgba(255,255,255,.08) !important;
+      opacity: 1 !important;
+    }
 
-        .cs-hr{
-            border-color: rgba(255,255,255,.08) !important;
-            opacity: 1 !important;
-        }
+    /* Preview block */
+    .crosshair-preview{
+      background: var(--panel2) !important;
+      border: 1px solid var(--border2) !important;
+      border-radius: var(--radius) !important;
+      padding: 12px !important;
+    }
 
-        /* Preview card */
-        .crosshair-preview{
-            background: var(--panel2) !important;
-            border: 1px solid var(--border2) !important;
-            border-radius: var(--radius) !important;
-            padding: 12px !important;
-        }
+    .crosshair-image{
+      position: relative !important;
+      overflow: hidden !important;
+      border-radius: var(--radius-sm) !important;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.25);
+    }
 
-        .crosshair-image{
-            border-radius: var(--radius-sm) !important;
-            overflow: hidden !important;
-            border: 1px solid rgba(255,255,255,.06);
-            background: rgba(0,0,0,.25);
-            position: relative !important;
-        }
+    /* Keep FULL map visible, consistent size across maps */
+    #originalImage{
+      width: 100% !important;
+      height: 260px !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      display:block !important;
+    }
 
-        /* Do NOT change preview size or canvas sizing (keep original behavior) */
-        /* only ensure canvas stays centered without forcing width/height */
-        #crosshairCanvas{
-            position: absolute !important;
-            left: 50% !important;
-            top: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            width: auto !important;
-            height: auto !important;
-            pointer-events: none !important;
-            image-rendering: pixelated;
-        }
+    /*
+      IMPORTANT FIX:
+      Do NOT force left/top/transform on canvas.
+      Let the library position it (like the original green version).
+      We ONLY prevent accidental stretching.
+    */
+    #crosshairCanvas{
+      width: 64px !important;
+      height: 64px !important;
+      pointer-events: none !important;
+      image-rendering: pixelated;
+    }
 
-        /* Inputs + selects */
-        .cs-select,
-        .cs-input{
-            background: rgba(255,255,255,.06) !important;
-            border: 1px solid var(--border2) !important;
-            color: var(--text) !important;
-            border-radius: var(--radius-sm) !important;
-        }
+    /* Inputs / selects */
+    .cs-select,
+    .cs-input{
+      background: rgba(255,255,255,.06) !important;
+      border: 1px solid var(--border2) !important;
+      color: var(--text) !important;
+      border-radius: var(--radius-sm) !important;
+    }
 
-        .cs-input::placeholder{ color: rgba(255,255,255,.45) !important; }
-        input[type="range"]{ accent-color: var(--accent); }
+    .cs-input__label, label{
+      color: var(--muted) !important;
+      font-weight: 700;
+    }
 
-        .cs-input__label, label{
-            color: var(--muted) !important;
-            font-weight: 700;
-        }
+    .cs-checkbox__label{ color: var(--text) !important; opacity: .9; }
+    input[type="range"]{ accent-color: var(--accent); }
 
-        .cs-checkbox__label{ color: var(--text) !important; opacity: .9; }
+    /* Grid spacing */
+    .controls-grid{
+      gap: 14px !important;
+      align-items: start;
+    }
+    @media (max-width: 820px){
+      .controls-grid{ grid-template-columns: 1fr !important; }
+    }
 
-        /* Grid: keep original but cleaner */
-        .controls-grid{
-            margin-left: 0 !important;
-        }
+    /* Buttons */
+    .cs-btn{
+      background: rgba(255,255,255,.06) !important;
+      border: 1px solid var(--border2) !important;
+      color: var(--text) !important;
+      border-radius: var(--radius-sm) !important;
+      box-shadow: none !important;
+      text-transform: none !important;
+    }
+    .cs-btn:hover{
+      border-color: rgba(255,255,255,.18) !important;
+      background: rgba(255,255,255,.09) !important;
+    }
 
-        /* Buttons */
-        .cs-btn{
-            background: rgba(255,255,255,.06) !important;
-            border: 1px solid var(--border2) !important;
-            color: var(--text) !important;
-            border-radius: var(--radius-sm) !important;
-            box-shadow: none !important;
-            text-transform: none !important;
-        }
+    .footer-btns .cs-btn{
+      background: var(--accent) !important;
+      border: 0 !important;
+      font-weight: 800;
+      padding: 10px 14px !important;
+    }
+    .footer-btns .cs-btn:hover{ filter: brightness(1.08); }
 
-        .cs-btn:hover{
-            border-color: rgba(255,255,255,.18) !important;
-            background: rgba(255,255,255,.09) !important;
-        }
+    /* Footer text */
+    p.text{
+      color: var(--muted) !important;
+      opacity: 0.9;
+      margin-top: 8px !important;
+    }
 
-        .footer-btns .cs-btn{
-            background: var(--accent) !important;
-            border: 0 !important;
-            font-weight: 800;
-            padding: 10px 14px !important;
-        }
+    /* Optional: hide Share button (recommended for embeds) */
+    .footer-btns button[onclick="shareCrosshair()"]{
+      display: none !important;
+    }
 
-        .footer-btns .cs-btn:hover{ filter: brightness(1.08); }
-
-        p.text{
-            color: var(--muted) !important;
-            opacity: .9;
-            margin-top: 10px !important;
-        }
-
-        /* Remove search UI completely (as requested) */
-        #searchType,
-        #inputContainer,
-        #autocompleteResults,
-        #searchInput,
-        #inputPrefix,
-        button[onclick="goToSearch()"]{
-            display: none !important;
-        }
-
-        /* Also remove the whole search row wrapper (gap cleanup) */
-        .cs-form-group > div[style*="max-width: 100%"][style*="flex-wrap: wrap"]{
-            display: none !important;
-        }
-
-        /* Optional: hide Share button (keep if you want it) */
-        /* .footer-btns button[onclick="shareCrosshair()"] { display:none !important; } */
-    </style>
+    /* Remove extra vertical scroll inside the embed when possible */
+    header#header, .top, .top > div{
+      max-width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="cs-dialog">
-        <div class="heading">
-            <div class="wrapper">
-                <div class="icon"></div>
-                <p class="text">CS2 Crosshair Tool - cs2bettingtips.com</p>
-            </div>
+  <div class="cs-dialog">
+    <div class="heading">
+      <div class="wrapper">
+        <div class="icon"></div>
+        <p class="text">CS2 Crosshair Tool - cs2bettingtips.com</p>
+      </div>
 
-            <button class="cs-btn close"
-                onclick="try{window.top.location.href='https://cs2bettingtips.com'}catch(e){window.location.href='https://cs2bettingtips.com'}"
-                aria-label="Close">×</button>
-        </div>
-
-        <header id="header">
-            <div class="top">
-                <div>
-                    <div class="cs-form-group">
-                        <div class="player-info" style="scale: 1.5; margin-bottom: -7px;">{{playerInfo}}</div>
-                        <div style="font-size: 1.3em; margin-top: 10px; margin-bottom: -7px;">{{stats}}</div>
-                        <div style="font-size: 0.8em; margin-top: 10px; margin-bottom: -7px;">{{lastUsed}}</div>
-
-                        <br>
-
-                        <!-- SEARCH ROW REMOVED -->
-
-                        <hr class="cs-hr" />
-
-                        <br>
-
-                        <div class="crosshair-preview">
-                            <div class="crosshair-image" id="crosshairImage">
-                                <img id="originalImage" src="{{imageUrl}}" />
-                                <canvas id="crosshairCanvas" width="64" height="64" style="display: none;"></canvas>
-                            </div>
-                            <div style="display: flex; justify-content: center; gap: 8px; margin-top: 8px">
-                                <button class="cs-btn" onclick="prevBackground()">←</button>
-                                <button class="cs-btn" onclick="nextBackground()">→</button>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div>
-                            <div class="controls-grid" style="margin-left: 0;">
-                                <div class="controls-column">
-                                    <div class="control-group">
-                                        <select id="cl_crosshairstyle" class="cs-select">
-                                            <option value="2">Classic</option>
-                                            <option value="4" selected>Classic Static</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-slider">
-                                            <div class="value">
-                                                <p>0</p>
-                                                <p>30</p>
-                                            </div>
-                                            <div class="ruler"></div>
-                                            <input id="cl_crosshairsize" type="range" min="0" max="30" step="0.5"
-                                                value="2" />
-                                            <label for="cl_crosshairsize">Size</label>
-                                        </div>
-                                        <span class="cs-input__label" id="cl_crosshairsize_value">2</span>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-slider">
-                                            <div class="value">
-                                                <p>0.5</p>
-                                                <p>5</p>
-                                            </div>
-                                            <div class="ruler"></div>
-                                            <input id="cl_crosshairthickness" type="range" min="0.5" max="5" step="0.5"
-                                                value="1" />
-                                            <label for="cl_crosshairthickness">Thickness</label>
-                                        </div>
-                                        <span class="cs-input__label" id="cl_crosshairthickness_value">1</span>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-slider">
-                                            <div class="value">
-                                                <p>-10</p>
-                                                <p>10</p>
-                                            </div>
-                                            <div class="ruler"></div>
-                                            <input id="cl_crosshairgap" type="range" min="-10" max="10" step="1"
-                                                value="-2" />
-                                            <label for="cl_crosshairgap">Gap</label>
-                                        </div>
-                                        <span class="cs-input__label" id="cl_crosshairgap_value">-2</span>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-checkbox">
-                                            <input type="checkbox" id="cl_crosshairusealpha" class="checkbox" checked>
-                                            <label for="cl_crosshairusealpha" class="cs-checkbox__label">Use
-                                                Alpha</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-checkbox">
-                                            <input type="checkbox" id="cl_crosshairdot" class="checkbox">
-                                            <label for="cl_crosshairdot" class="cs-checkbox__label">Center Dot</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-checkbox">
-                                            <input type="checkbox" id="cl_crosshair_t" class="checkbox">
-                                            <label for="cl_crosshair_t" class="cs-checkbox__label">T Style</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-checkbox">
-                                            <input type="checkbox" id="cl_crosshair_drawoutline" class="checkbox"
-                                                checked>
-                                            <label for="cl_crosshair_drawoutline" class="cs-checkbox__label">Draw
-                                                Outline</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="controls-column">
-                                    <div class="control-group">
-                                        <select id="cl_crosshaircolor" class="cs-select">
-                                            <option value="0">Red</option>
-                                            <option value="1">Green</option>
-                                            <option value="2">Yellow</option>
-                                            <option value="3">Blue</option>
-                                            <option value="4">Cyan</option>
-                                            <option value="5" selected>Custom Color</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="color-controls">
-                                        <div class="control-group">
-                                            <div class="cs-slider">
-                                                <div class="value">
-                                                    <p>0</p>
-                                                    <p>255</p>
-                                                </div>
-                                                <div class="ruler"></div>
-                                                <input id="cl_crosshaircolor_r" type="range" min="0" max="255" step="1"
-                                                    value="50" />
-                                                <label for="cl_crosshaircolor_r">Red</label>
-                                            </div>
-                                            <span class="cs-input__label" id="cl_crosshaircolor_r_value">50</span>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <div class="cs-slider">
-                                                <div class="value">
-                                                    <p>0</p>
-                                                    <p>255</p>
-                                                </div>
-                                                <div class="ruler"></div>
-                                                <input id="cl_crosshaircolor_g" type="range" min="0" max="255" step="1"
-                                                    value="250" />
-                                                <label for="cl_crosshaircolor_g">Green</label>
-                                            </div>
-                                            <span class="cs-input__label" id="cl_crosshaircolor_g_value">250</span>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <div class="cs-slider">
-                                                <div class="value">
-                                                    <p>0</p>
-                                                    <p>255</p>
-                                                </div>
-                                                <div class="ruler"></div>
-                                                <input id="cl_crosshaircolor_b" type="range" min="0" max="255" step="1"
-                                                    value="50" />
-                                                <label for="cl_crosshaircolor_b">Blue</label>
-                                            </div>
-                                            <span class="cs-input__label" id="cl_crosshaircolor_b_value">50</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-slider">
-                                            <div class="value">
-                                                <p>0</p>
-                                                <p>255</p>
-                                            </div>
-                                            <div class="ruler"></div>
-                                            <input id="cl_crosshairalpha" type="range" min="0" max="255" step="1"
-                                                value="255" />
-                                            <label for="cl_crosshairalpha">Alpha</label>
-                                        </div>
-                                        <span class="cs-input__label" id="cl_crosshairalpha_value">255</span>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <div class="cs-slider">
-                                            <div class="value">
-                                                <p>0</p>
-                                                <p>3</p>
-                                            </div>
-                                            <div class="ruler"></div>
-                                            <input id="cl_crosshair_outlinethickness" type="range" min="0" max="3"
-                                                step="0.5" value="1" />
-                                            <label for="cl_crosshair_outlinethickness">Outline Thickness</label>
-                                        </div>
-                                        <span class="cs-input__label" id="cl_crosshair_outlinethickness_value">1</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="code-section">
-                            <input type="text" readonly id="crosshairCode" value="{{codeValue}}" class="cs-input"
-                                style="width: 100%;" />
-                        </div>
-
-                        <br>
-
-                        <p class="text">modify settings above to generate new codes, player cache expires every 3 hours</p>
-
-                        <menu class="footer-btns" style="position:relative;">
-                            <button class="cs-btn" onclick="copyCode()">Copy</button>
-                            <button class="cs-btn" onclick="downloadImage()">Save</button>
-                            <button class="cs-btn" onclick="shareCrosshair()">Share</button>
-                        </menu>
-                    </div>
-                </div>
-            </div>
-        </header>
+      <button
+        class="cs-btn close"
+        onclick="try{window.top.location.href='https://cs2bettingtips.com'}catch(e){window.location.href='https://cs2bettingtips.com'}"
+        aria-label="Close">
+      </button>
     </div>
 
-    <script>
-        const originalCode = '{{codeValue}}';
-    </script>
+    <header id="header">
+      <div class="top">
+        <div>
+          <div class="cs-form-group">
+            <div class="player-info" style="scale: 1.35; margin-bottom: 6px;">{{playerInfo}}</div>
+            <div class="stats-line">{{stats}}</div>
+            <div class="lastused-line">{{lastUsed}}</div>
 
-    <script
-        src="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.js">
-    </script>
+            <br>
+
+            <!-- ✅ SEARCH UI REMOVED COMPLETELY -->
+
+            <hr class="cs-hr" />
+            <br>
+
+            <div class="crosshair-preview">
+              <div class="crosshair-image" id="crosshairImage">
+                <img id="originalImage" src="{{imageUrl}}" />
+                <canvas id="crosshairCanvas" width="64" height="64" style="display:none;"></canvas>
+              </div>
+
+              <div style="display:flex; justify-content:center; gap:8px; margin-top:10px">
+                <button class="cs-btn" onclick="prevBackground()">←</button>
+                <button class="cs-btn" onclick="nextBackground()">→</button>
+              </div>
+            </div>
+
+            <br>
+
+            <div>
+              <div class="controls-grid" style="margin-left: 0;">
+                <div class="controls-column">
+                  <div class="control-group">
+                    <select id="cl_crosshairstyle" class="cs-select">
+                      <option value="2">Classic</option>
+                      <option value="4" selected>Classic Static</option>
+                    </select>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-slider">
+                      <div class="value"><p>0</p><p>30</p></div>
+                      <div class="ruler"></div>
+                      <input id="cl_crosshairsize" type="range" min="0" max="30" step="0.5" value="2" />
+                      <label for="cl_crosshairsize">Size</label>
+                    </div>
+                    <span class="cs-input__label" id="cl_crosshairsize_value">2</span>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-slider">
+                      <div class="value"><p>0.5</p><p>5</p></div>
+                      <div class="ruler"></div>
+                      <input id="cl_crosshairthickness" type="range" min="0.5" max="5" step="0.5" value="1" />
+                      <label for="cl_crosshairthickness">Thickness</label>
+                    </div>
+                    <span class="cs-input__label" id="cl_crosshairthickness_value">1</span>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-slider">
+                      <div class="value"><p>-10</p><p>10</p></div>
+                      <div class="ruler"></div>
+                      <input id="cl_crosshairgap" type="range" min="-10" max="10" step="1" value="-2" />
+                      <label for="cl_crosshairgap">Gap</label>
+                    </div>
+                    <span class="cs-input__label" id="cl_crosshairgap_value">-2</span>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-checkbox">
+                      <input type="checkbox" id="cl_crosshairusealpha" class="checkbox" checked>
+                      <label for="cl_crosshairusealpha" class="cs-checkbox__label">Use Alpha</label>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-checkbox">
+                      <input type="checkbox" id="cl_crosshairdot" class="checkbox">
+                      <label for="cl_crosshairdot" class="cs-checkbox__label">Center Dot</label>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-checkbox">
+                      <input type="checkbox" id="cl_crosshair_t" class="checkbox">
+                      <label for="cl_crosshair_t" class="cs-checkbox__label">T Style</label>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-checkbox">
+                      <input type="checkbox" id="cl_crosshair_drawoutline" class="checkbox" checked>
+                      <label for="cl_crosshair_drawoutline" class="cs-checkbox__label">Draw Outline</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="controls-column">
+                  <div class="control-group">
+                    <select id="cl_crosshaircolor" class="cs-select">
+                      <option value="0">Red</option>
+                      <option value="1">Green</option>
+                      <option value="2">Yellow</option>
+                      <option value="3">Blue</option>
+                      <option value="4">Cyan</option>
+                      <option value="5" selected>Custom Color</option>
+                    </select>
+                  </div>
+
+                  <div class="color-controls">
+                    <div class="control-group">
+                      <div class="cs-slider">
+                        <div class="value"><p>0</p><p>255</p></div>
+                        <div class="ruler"></div>
+                        <input id="cl_crosshaircolor_r" type="range" min="0" max="255" step="1" value="50" />
+                        <label for="cl_crosshaircolor_r">Red</label>
+                      </div>
+                      <span class="cs-input__label" id="cl_crosshaircolor_r_value">50</span>
+                    </div>
+
+                    <div class="control-group">
+                      <div class="cs-slider">
+                        <div class="value"><p>0</p><p>255</p></div>
+                        <div class="ruler"></div>
+                        <input id="cl_crosshaircolor_g" type="range" min="0" max="255" step="1" value="250" />
+                        <label for="cl_crosshaircolor_g">Green</label>
+                      </div>
+                      <span class="cs-input__label" id="cl_crosshaircolor_g_value">250</span>
+                    </div>
+
+                    <div class="control-group">
+                      <div class="cs-slider">
+                        <div class="value"><p>0</p><p>255</p></div>
+                        <div class="ruler"></div>
+                        <input id="cl_crosshaircolor_b" type="range" min="0" max="255" step="1" value="50" />
+                        <label for="cl_crosshaircolor_b">Blue</label>
+                      </div>
+                      <span class="cs-input__label" id="cl_crosshaircolor_b_value">50</span>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-slider">
+                      <div class="value"><p>0</p><p>255</p></div>
+                      <div class="ruler"></div>
+                      <input id="cl_crosshairalpha" type="range" min="0" max="255" step="1" value="255" />
+                      <label for="cl_crosshairalpha">Alpha</label>
+                    </div>
+                    <span class="cs-input__label" id="cl_crosshairalpha_value">255</span>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="cs-slider">
+                      <div class="value"><p>0</p><p>3</p></div>
+                      <div class="ruler"></div>
+                      <input id="cl_crosshair_outlinethickness" type="range" min="0" max="3" step="0.5" value="1" />
+                      <label for="cl_crosshair_outlinethickness">Outline Thickness</label>
+                    </div>
+                    <span class="cs-input__label" id="cl_crosshair_outlinethickness_value">1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="code-section">
+              <input type="text" readonly id="crosshairCode" value="{{codeValue}}" class="cs-input" style="width:100%;" />
+            </div>
+
+            <br>
+
+            <p class="text">Modify settings above to generate new codes. Player cache expires every 3 hours.</p>
+
+            <menu class="footer-btns" style="position:relative;">
+              <button class="cs-btn" onclick="copyCode()">Copy</button>
+              <button class="cs-btn" onclick="downloadImage()">Save</button>
+              <button class="cs-btn" onclick="shareCrosshair()">Share</button>
+            </menu>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <script>
+    const originalCode = '{{codeValue}}';
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.js"></script>
 </body>
-
 </html>
