@@ -13,13 +13,11 @@
     href="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.css">
 
   <style>
-    /* ===== keep original functionality intact ===== */
     .player-info { color: {{colorRGB}}; }
     .otag { display: none; }
 
-    /* ===== ONLY COLOR SKIN (NO DIMENSIONS, NO CANVAS/IMAGE CSS) ===== */
     :root{
-      --panel: #1a1f27;          /* dark slate */
+      --panel: #1a1f27;
       --panel2: #202632;
       --border: rgba(255,255,255,.10);
       --border2: rgba(255,255,255,.08);
@@ -31,32 +29,28 @@
     }
 
     html, body{
-      background: transparent !important; /* use WP background */
+      background: transparent !important;
       margin: 0;
       padding: 0;
       color: var(--text);
     }
 
-    /* Override cs16 “green window” look */
+    /* override cs16 “green window” */
     .cs-dialog,
     .cs-dialog .heading,
     .cs-dialog .cs-form-group,
-    .cs-dialog .crosshair-preview {
+    .cs-dialog .crosshair-preview{
       background: var(--panel) !important;
       border-color: var(--border) !important;
       color: var(--text) !important;
     }
-
     .cs-dialog .crosshair-preview{
       background: var(--panel2) !important;
       border-color: var(--border2) !important;
     }
 
-    /* Round corners ONLY (doesn't change size) */
-    .cs-dialog .heading{
-      border-radius: var(--radius) !important;
-      overflow: hidden !important;
-    }
+    /* round corners only (no sizing changes) */
+    .cs-dialog .heading,
     .cs-dialog .cs-form-group{
       border-radius: var(--radius) !important;
       overflow: hidden !important;
@@ -66,72 +60,95 @@
       overflow: hidden !important;
     }
 
-    /* Header title centered (no size changes) */
+    /* header centered */
     .cs-dialog .heading{
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
     }
     .cs-dialog .heading .wrapper{
-      width: 100% !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
+      width:100% !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
     }
     .cs-dialog .heading .text{
-      margin: 0 !important;
-      width: 100% !important;
-      text-align: center !important;
+      margin:0 !important;
+      width:100% !important;
+      text-align:center !important;
       color: var(--text) !important;
-      font-weight: 700;
-      letter-spacing: .2px;
+      font-weight:700;
+      letter-spacing:.2px;
     }
-    .cs-dialog .heading .icon{
-      display:none !important;
-    }
+    .cs-dialog .heading .icon{ display:none !important; }
 
-    /* Remove X button completely */
-    .cs-dialog .heading .cs-btn.close{
-      display: none !important;
-    }
+    /* remove X completely */
+    .cs-dialog .heading .cs-btn.close{ display:none !important; }
 
-    /* Inputs / selects / buttons recolor only */
+    /* inputs/selects/buttons recolor */
     .cs-select, .cs-input{
       background: rgba(255,255,255,.06) !important;
       border: 1px solid rgba(255,255,255,.10) !important;
       color: var(--text) !important;
       border-radius: var(--radius-sm) !important;
     }
-    .cs-input__label, label{
-      color: var(--muted) !important;
-    }
+    .cs-input__label, label{ color: var(--muted) !important; }
 
     .cs-btn{
       background: rgba(255,255,255,.06) !important;
       border: 1px solid rgba(255,255,255,.10) !important;
       color: var(--text) !important;
       border-radius: var(--radius-sm) !important;
-      text-transform: none !important;
+      text-transform:none !important;
     }
     .cs-btn:hover{
       background: rgba(255,255,255,.10) !important;
       border-color: rgba(255,255,255,.16) !important;
     }
 
+    /* remove Share button */
+    .footer-btns button[onclick="shareCrosshair()"]{ display:none !important; }
+
+    /* remove “modify settings…” line */
+    p.text{ display:none !important; }
+
+    /* ===== requested tweaks ===== */
+
+    /* More breathing room around arrows */
+    .crosshair-preview > div[style*="justify-content: center"]{
+      margin-top: 12px !important;
+      margin-bottom: 6px !important;
+      gap: 10px !important;
+    }
+
+    /* Center code text */
+    #crosshairCode{
+      text-align: center !important;
+      font-size: 16px !important;
+      padding: 12px 14px !important;
+    }
+
+    /* Center footer buttons + make them bigger + text centered */
+    .footer-btns{
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 12px !important;
+      padding-bottom: 8px !important;
+    }
     .footer-btns .cs-btn{
       background: var(--accent) !important;
       border: 0 !important;
-      font-weight: 800;
-    }
+      font-weight: 800 !important;
 
-    /* Remove Share button */
-    .footer-btns button[onclick="shareCrosshair()"]{
-      display: none !important;
-    }
+      min-width: 120px !important;
+      padding: 12px 18px !important;
+      font-size: 16px !important;
 
-    /* Remove the “modify settings…” line */
-    p.text{
-      display: none !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      line-height: 1 !important;
     }
   </style>
 </head>
@@ -143,25 +160,18 @@
         <div class="icon"></div>
         <p class="text">CS2 Crosshair Tool - cs2bettingtips.com</p>
       </div>
-      <!-- X removed -->
-      <button class="cs-btn close" onclick="window.location.href='https://cs2bettingtips.com'"></button>
     </div>
 
     <header id="header">
       <div class="top">
         <div>
 
-          <!-- KEEP ORIGINAL DIMENSIONS EXACTLY (DON'T TOUCH THIS INLINE STYLE) -->
+          <!-- DO NOT TOUCH THIS: keeps original dimensions -->
           <div class="cs-form-group" style="margin: 50px 0">
-            <div class="player-info" style="scale: 1.5; margin-bottom: -7px;">{{playerInfo}}</div>
-            <div style="font-size: 1.3em; margin-top: 10px; margin-bottom: -7px;">{{stats}}</div>
-            <div style="font-size: 0.8em; margin-top: 10px; margin-bottom: -7px;">{{lastUsed}}</div>
 
-            <br>
+            <!-- ✅ Everything above the line REMOVED -->
 
-            <!-- Search UI removed -->
             <hr class="cs-hr" />
-
             <br>
 
             <div class="crosshair-preview">
@@ -169,6 +179,7 @@
                 <img id="originalImage" src="{{imageUrl}}" />
                 <canvas id="crosshairCanvas" width="64" height="64" style="display: none;"></canvas>
               </div>
+
               <div style="display: flex; justify-content: center; gap: 1px; margin-top: 5px">
                 <button class="cs-btn" onclick="prevBackground()">←</button>
                 <button class="cs-btn" onclick="nextBackground()">→</button>
@@ -337,4 +348,5 @@
 
   <script src="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.js"></script>
 </body>
+
 </html>
