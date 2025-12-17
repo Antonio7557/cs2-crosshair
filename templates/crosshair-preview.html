@@ -105,7 +105,13 @@
 
     /* ===== Requested tweaks ===== */
 
-    /* Title above the HR */
+    /* Tighten overall vertical space (NO width/max-width changes) */
+    .cs-dialog .cs-form-group{
+      padding-top: 14px !important;
+      padding-bottom: 14px !important;
+    }
+
+    /* Title above the HR (less empty space) */
     .tool-title{
       text-align: center;
       font-weight: 800;
@@ -113,16 +119,17 @@
       color: var(--text);
       opacity: .95;
       font-size: 16px;
-      padding: 10px 0 6px 0;
+      padding: 4px 0 4px 0 !important;
+      margin: 0 !important;
     }
 
-    /* Arrow spacing: add equal top & bottom spacing */
+    /* Arrow spacing: equal top & bottom spacing */
     .arrow-row{
       display: flex;
       justify-content: center;
       gap: 10px;
       margin-top: 12px !important;
-      margin-bottom: 12px !important; /* <-- this is the missing bottom space */
+      margin-bottom: 12px !important;
     }
 
     #crosshairCode{
@@ -136,7 +143,8 @@
       justify-content: center !important;
       align-items: center !important;
       gap: 12px !important;
-      padding-bottom: 8px !important;
+      padding: 0 !important;
+      margin: 10px 0 0 0 !important; /* tighten bottom */
     }
     .footer-btns .cs-btn{
       background: var(--accent) !important;
@@ -168,13 +176,12 @@
       <div class="top">
         <div>
 
-          <div class="cs-form-group" style="margin: 50px 0">
+          <!-- ✅ MAIN FIX: reduce top/bottom scroll space -->
+          <div class="cs-form-group" style="margin: 18px 0">
 
-            <!-- ✅ Title in the empty space above the line -->
             <div class="tool-title">CS2 Crosshair Generator - cs2bettingtips.com</div>
 
-            <hr class="cs-hr" />
-            <br>
+            <hr class="cs-hr" style="margin-top: 8px; margin-bottom: 10px;" />
 
             <div class="crosshair-preview">
               <div class="crosshair-image" id="crosshairImage">
@@ -182,7 +189,6 @@
                 <canvas id="crosshairCanvas" width="64" height="64" style="display: none;"></canvas>
               </div>
 
-              <!-- ✅ arrows with equal top/bottom spacing -->
               <div class="arrow-row">
                 <button class="cs-btn" onclick="prevBackground()">←</button>
                 <button class="cs-btn" onclick="nextBackground()">→</button>
@@ -327,11 +333,9 @@
               </div>
             </div>
 
-            <div class="code-section">
+            <div class="code-section" style="margin-top: 12px;">
               <input type="text" readonly id="crosshairCode" value="{{codeValue}}" class="cs-input" style="width: 100%;" />
             </div>
-
-            <br>
 
             <menu class="footer-btns" style="position:relative;">
               <button class="cs-btn" onclick="copyCode()">Copy</button>
