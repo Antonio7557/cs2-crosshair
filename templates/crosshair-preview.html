@@ -282,30 +282,41 @@
 }
 
 /* 2. Header layout (no weird offset) */
+/* Header: keep it inside and center title */
 .cs-dialog .heading{
-  background: rgba(255,255,255,0.03) !important;
-  border: 1px solid var(--border2) !important;
-  border-radius: var(--radius) !important;
-  box-shadow: var(--shadow) !important;
-  padding: 12px 14px !important;
-  margin-bottom: 14px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 
   display: flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
+  justify-content: center !important;
+
+  position: relative !important;
 }
 
+/* Make wrapper span full width so centering is real */
 .cs-dialog .heading .wrapper{
+  width: 100% !important;
   display: flex !important;
+  justify-content: center !important;
   align-items: center !important;
-  gap: 10px !important;
 }
 
+/* Title centered */
 .cs-dialog .heading .text{
+  text-align: center !important;
   margin: 0 !important;
-  font-weight: 800 !important;
-  opacity: .9 !important;
 }
+
+/* Close button pinned right */
+.cs-dialog .heading .cs-btn.close{
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
 
 /* 3. REAL visible X close button */
 .cs-dialog .heading .cs-btn.close{
@@ -350,18 +361,33 @@
   display: none !important;
 }
 
-/* 6. Crosshair always centered */
+/* 6. Crosshair overlay - FIX drift */
 .crosshair-image{
   position: relative !important;
   overflow: hidden !important;
 }
+
+/* Make the preview image always show FULL map (no crop) */
+#originalImage{
+  width: 100% !important;
+  height: 260px !important;          /* consistent height for all maps */
+  object-fit: contain !important;     /* show full image */
+  object-position: center center !important;
+  display: block !important;
+}
+
+/* Canvas must NOT be stretched to 100% by external CSS */
 #crosshairCanvas{
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%,-50%) !important;
+
+  width: 64px !important;            /* force CSS size to match buffer */
+  height: 64px !important;           /* prevents “draw at 32px from left” */
   pointer-events: none !important;
 }
+
 
   </style>
 </head>
