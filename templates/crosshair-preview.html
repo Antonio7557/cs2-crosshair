@@ -13,52 +13,51 @@
     href="https://cdn.jsdelivr.net/gh/girlglock/cs2-crosshair@latest/remote-assets/static/crosshair-preview.min.css">
 
   <style>
-    /* ===== Keep original functionality & sizing ===== */
+    /* ===== keep original functionality intact ===== */
     .player-info { color: {{colorRGB}}; }
     .otag { display: none; }
 
-    /* ===== Minimal theme adjustments ONLY (no sizing changes) ===== */
+    /* ===== ONLY COLOR SKIN (NO DIMENSIONS, NO CANVAS/IMAGE CSS) ===== */
     :root{
-      --panel: rgba(20, 24, 30, 0.92);
-      --border: rgba(255,255,255,0.10);
-      --text: rgba(255,255,255,0.90);
-      --muted: rgba(255,255,255,0.65);
+      --panel: #1a1f27;          /* dark slate */
+      --panel2: #202632;
+      --border: rgba(255,255,255,.10);
+      --border2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.90);
+      --muted: rgba(255,255,255,.65);
+      --accent: #e11d48;
       --radius: 16px;
       --radius-sm: 12px;
     }
 
     html, body{
-      background: transparent !important; /* WP background */
-      color: var(--text) !important;
+      background: transparent !important; /* use WP background */
       margin: 0;
       padding: 0;
+      color: var(--text);
     }
 
-    /* Header: center text, remove X entirely */
+    /* Override cs16 “green window” look */
+    .cs-dialog,
+    .cs-dialog .heading,
+    .cs-dialog .cs-form-group,
+    .cs-dialog .crosshair-preview {
+      background: var(--panel) !important;
+      border-color: var(--border) !important;
+      color: var(--text) !important;
+    }
+
+    .cs-dialog .crosshair-preview{
+      background: var(--panel2) !important;
+      border-color: var(--border2) !important;
+    }
+
+    /* Round corners ONLY (doesn't change size) */
     .cs-dialog .heading{
       border-radius: var(--radius) !important;
       overflow: hidden !important;
     }
-    .cs-dialog .heading .text{
-      width: 100% !important;
-      text-align: center !important;
-      color: var(--text) !important;
-      font-weight: 700;
-      letter-spacing: .2px;
-      margin: 0 !important;
-    }
-    .cs-dialog .heading .cs-btn.close{
-      display: none !important; /* remove X */
-    }
-
-    /* Main box rounded corners (NO margin/size changes) */
-    .cs-form-group{
-      border-radius: var(--radius) !important;
-      overflow: hidden !important;
-    }
-
-    /* Preview rounding only */
-    .crosshair-preview{
+    .cs-dialog .cs-form-group{
       border-radius: var(--radius) !important;
       overflow: hidden !important;
     }
@@ -67,9 +66,62 @@
       overflow: hidden !important;
     }
 
-    /* Inputs / selects / buttons minimal recolor only */
+    /* Header title centered (no size changes) */
+    .cs-dialog .heading{
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .cs-dialog .heading .wrapper{
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .cs-dialog .heading .text{
+      margin: 0 !important;
+      width: 100% !important;
+      text-align: center !important;
+      color: var(--text) !important;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .cs-dialog .heading .icon{
+      display:none !important;
+    }
+
+    /* Remove X button completely */
+    .cs-dialog .heading .cs-btn.close{
+      display: none !important;
+    }
+
+    /* Inputs / selects / buttons recolor only */
     .cs-select, .cs-input{
+      background: rgba(255,255,255,.06) !important;
+      border: 1px solid rgba(255,255,255,.10) !important;
+      color: var(--text) !important;
       border-radius: var(--radius-sm) !important;
+    }
+    .cs-input__label, label{
+      color: var(--muted) !important;
+    }
+
+    .cs-btn{
+      background: rgba(255,255,255,.06) !important;
+      border: 1px solid rgba(255,255,255,.10) !important;
+      color: var(--text) !important;
+      border-radius: var(--radius-sm) !important;
+      text-transform: none !important;
+    }
+    .cs-btn:hover{
+      background: rgba(255,255,255,.10) !important;
+      border-color: rgba(255,255,255,.16) !important;
+    }
+
+    .footer-btns .cs-btn{
+      background: var(--accent) !important;
+      border: 0 !important;
+      font-weight: 800;
     }
 
     /* Remove Share button */
@@ -77,7 +129,7 @@
       display: none !important;
     }
 
-    /* Remove the “modify settings…” text line */
+    /* Remove the “modify settings…” line */
     p.text{
       display: none !important;
     }
@@ -98,7 +150,8 @@
     <header id="header">
       <div class="top">
         <div>
-          <!-- KEEP ORIGINAL margin/size EXACTLY (do not change) -->
+
+          <!-- KEEP ORIGINAL DIMENSIONS EXACTLY (DON'T TOUCH THIS INLINE STYLE) -->
           <div class="cs-form-group" style="margin: 50px 0">
             <div class="player-info" style="scale: 1.5; margin-bottom: -7px;">{{playerInfo}}</div>
             <div style="font-size: 1.3em; margin-top: 10px; margin-bottom: -7px;">{{stats}}</div>
@@ -106,7 +159,7 @@
 
             <br>
 
-            <!-- Search UI already removed -->
+            <!-- Search UI removed -->
             <hr class="cs-hr" />
 
             <br>
@@ -261,13 +314,10 @@
             </div>
 
             <div class="code-section">
-              <input type="text" readonly id="crosshairCode" value="{{codeValue}}" class="cs-input"
-                style="width: 100%;" />
+              <input type="text" readonly id="crosshairCode" value="{{codeValue}}" class="cs-input" style="width: 100%;" />
             </div>
 
             <br>
-
-            <!-- modify settings text removed via CSS (and can be removed from HTML too) -->
 
             <menu class="footer-btns" style="position:relative;">
               <button class="cs-btn" onclick="copyCode()">Copy</button>
