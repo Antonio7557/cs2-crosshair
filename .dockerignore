@@ -1,0 +1,6 @@
+jsconfig.d.ts
+package-lock.json
+node_modules/
+cache/
+_old-stuff/
+remote-assets/static/liquipedia-scraper.py
