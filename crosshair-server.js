@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
   // dopusti railway default domene dok si na njima
   if (host.endsWith('.up.railway.app')) return next();
-
+  if (host.endsWith('.fly.dev')) return next();
   // dopusti ono što je u configu
   const allow = allowedHosts();
   if (allow.has(host)) return next();
